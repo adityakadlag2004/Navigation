@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.fragment_choose_receipient.*
 
 
 class ChooseRecipientFragment : Fragment(), View.OnClickListener {
@@ -33,7 +36,15 @@ class ChooseRecipientFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.next_btn -> {
-                navController!!.navigate(R.id.action_chooseRecipientFragment_to_specifyAmountFragment)
+                if ((input_recipient.text).isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "Fill the Fields", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                  val bundle= bundleOf("recipient" to input_recipient.text.toString())
+                  navController!!.navigate(R.id.action_chooseRecipientFragment_to_specifyAmountFragment
+                  ,bundle)
+                }
             }
             R.id.cancel_btn -> {
                 requireActivity().onBackPressed()
